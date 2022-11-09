@@ -17,4 +17,5 @@ class Guest < ApplicationRecord
   validates :email, uniqueness: true
 
   has_many :guest_contacts
+  has_many :reservations
 end

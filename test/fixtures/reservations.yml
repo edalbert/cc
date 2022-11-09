@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  start_date: 2022-11-09
+  end_date: 2022-11-09
+  number_of_nights: 1
+  number_of_guests: 1
+  number_of_children: 1
+  number_of_infants: 1
+  number_of_adults: 1
+  description: MyString
+  status: MyString
+  host_currency: MyString
+  payout_price: 9.99
+  security_price: 9.99
+  total_price: 9.99
+
+two:
+  code: MyString
+  start_date: 2022-11-09
+  end_date: 2022-11-09
+  number_of_nights: 1
+  number_of_guests: 1
+  number_of_children: 1
+  number_of_infants: 1
+  number_of_adults: 1
+  description: MyString
+  status: MyString
+  host_currency: MyString
+  payout_price: 9.99
+  security_price: 9.99
+  total_price: 9.99
