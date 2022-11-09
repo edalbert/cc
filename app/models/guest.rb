@@ -9,5 +9,10 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+# Indexes
+#
+#  index_guests_on_email  (email) UNIQUE
+#
 class Guest < ApplicationRecord
+  validates :email, uniqueness: true
 end
