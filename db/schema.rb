@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_09_035944) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_11_063118) do
   create_table "guest_contacts", force: :cascade do |t|
     t.integer "guest_id", null: false
     t.string "phone"
@@ -25,7 +25,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_09_035944) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "reservation_id"
     t.index ["email"], name: "index_guests_on_email", unique: true
+    t.index ["reservation_id"], name: "index_guests_on_reservation_id"
   end
 
   create_table "reservations", force: :cascade do |t|
@@ -45,9 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_09_035944) do
     t.decimal "total_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "guest_id"
     t.index ["code"], name: "index_reservations_on_code", unique: true
-    t.index ["guest_id"], name: "index_reservations_on_guest_id"
   end
 
   add_foreign_key "guest_contacts", "guests"

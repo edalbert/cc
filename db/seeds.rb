@@ -6,13 +6,6 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 15.times do
-  guest_attributes = {
-    first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name,
-    email: Faker::Internet.unique.email,
-  }
-  guest = Guest.create(guest_attributes)
-
   reservation_attributes = {
     code: Faker::Alphanumeric.unique.alphanumeric(number: 11),
     description: Faker::Company.bs,
@@ -27,8 +20,15 @@
     security_price: 10_000,
     start_date: '10-Oct-2024',
     status: 'accepted',
-    total_price: 20_000,
-    guest_id: guest.id
+    total_price: 20_000
   }
-  Reservation.create(reservation_attributes)
+  reservation = Reservation.create(reservation_attributes)
+
+  guest_attributes = {
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    email: Faker::Internet.unique.email,
+    reservation_id: reservation.id
+  }
+  Guest.create(guest_attributes)
 end
