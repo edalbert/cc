@@ -27,7 +27,7 @@ describe AirBnbParsingService do
   end
   let(:service) { described_class.new(attributes) }
 
-  describe '#transform' do
+  describe '#reservation_params' do
     context 'when nicely-formed params are provided' do
       let(:expected_data) do
         {
@@ -49,19 +49,51 @@ describe AirBnbParsingService do
       end
 
       it 'transforms the hash into something the database can save' do
-         expect(service.transform).to eq(expected_data)
+         expect(service.reservation_params).to eq(expected_data)
       end
     end
 
     context 'when the params that are provided does not have all the fields' do
       let(:attributes) { {} }
-      subject { service.transform }
+      subject { service.reservation_params }
 
-      it 'provides a fully-formed hash but with nil values' do
+      it 'returns a fully-formed hash but with nil values' do
         expect(subject).to be_a Hash
         expect(subject.keys).to match_array(%i[code description end_date host_currency
           number_of_adults number_of_children number_of_guests number_of_infants
           number_of_nights payout_price security_price start_date status total_price]
+        )
+      end
+    end
+  end
+
+  describe '#guest_params' do
+    subject { service.guest_params }
+
+    context 'when guest details are present in the params' do
+      let(:expected_data) do
+        {
+          email: 'wayne_woodbridge@bnb.com',
+          first_name: 'Wayne',
+          last_name: 'Woodbridge',
+          guest_contacts_attributes: [
+            { phone: '639123456789' }, { phone: '639123456789' }
+          ]
+        }
+      end
+      it 'returns only guest-specific details' do
+        expect(subject.keys).to match_array(
+          %i[email first_name last_name guest_contacts_attributes]
+        )
+        expect(subject).to eq(expected_data)
+      end
+    end
+
+    context 'when there is no guest detail present in the params' do
+      it 'returns a fully-formed hash but with nil values' do
+        expect(subject).to be_a Hash
+        expect(subject.keys).to match_array(
+          %i[email first_name last_name guest_contacts_attributes]
         )
       end
     end

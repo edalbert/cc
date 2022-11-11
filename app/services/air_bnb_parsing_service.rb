@@ -4,19 +4,13 @@ class AirBnbParsingService
   # To use:
   #
   # service = AirBnbParsingService.new(params[:reservation])
-  # service.transform
+  # service.reservation_params
   def initialize(attributes)
     @attributes = attributes
   end
 
-  # parses AirBnB fields into fields that the db can understand
-  #
-  # @return [Hash]
-  def transform
-    reservation_params
-  end
-
-  # Params that are specific to the Reservation model
+  # Returns params that are specific to the Reservation model and leaves out
+  # guest details
   #
   # @return [Hash]
   def reservation_params
@@ -46,7 +40,7 @@ class AirBnbParsingService
       email: attributes[:guest_email],
       first_name: attributes[:guest_first_name],
       last_name: attributes[:guest_last_name],
-      guest_contact_attributes: attributes[:guest_phone_numbers]&.map { |phone| { phone: phone } },
+      guest_contacts_attributes: attributes[:guest_phone_numbers]&.map { |phone| { phone: phone } },
     }
   end
 end
