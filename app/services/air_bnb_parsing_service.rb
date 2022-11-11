@@ -1,3 +1,6 @@
+require 'active_support'
+require 'active_support/core_ext'
+
 class AirBnbParsingService
   attr_reader :attributes
 
@@ -6,7 +9,7 @@ class AirBnbParsingService
   # service = AirBnbParsingService.new(params[:reservation])
   # service.reservation_params
   def initialize(attributes)
-    @attributes = attributes
+    @attributes = attributes.deep_symbolize_keys
   end
 
   # Returns params that are specific to the Reservation model and leaves out
