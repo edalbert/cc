@@ -16,8 +16,8 @@
 class Guest < ApplicationRecord
   validates :email, uniqueness: true
 
-  has_many :guest_contacts
-  has_many :reservations
+  has_many :guest_contacts, dependent: :destroy
+  has_many :reservations, dependent: :destroy
 
   accepts_nested_attributes_for :guest_contacts
 end
