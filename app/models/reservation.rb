@@ -19,13 +19,15 @@
 #  total_price        :decimal(, )
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  guest_id           :integer
 #
 # Indexes
 #
-#  index_reservations_on_code  (code) UNIQUE
+#  index_reservations_on_code      (code) UNIQUE
+#  index_reservations_on_guest_id  (guest_id)
 #
 class Reservation < ApplicationRecord
-  has_one :guest
+  belongs_to :guest
 
   accepts_nested_attributes_for :guest
 end
