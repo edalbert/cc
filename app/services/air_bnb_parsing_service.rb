@@ -13,6 +13,13 @@ class AirBnbParsingService
   #
   # @return [Hash]
   def transform
+    reservation_params
+  end
+
+  # Params that are specific to the Reservation model
+  #
+  # @return [Hash]
+  def reservation_params
     {
       code: attributes[:code],
       description: attributes.dig(:guest_details, :localized_description),
@@ -28,13 +35,18 @@ class AirBnbParsingService
       start_date: attributes[:start_date],
       status: attributes[:status],
       total_price: attributes[:total_paid_amount_accurate],
-    }.tap do |reservation|
-      reservation[:guest_attributes] = {}
-      reservation[:guest_attributes][:email] = attributes[:guest_email]
-      reservation[:guest_attributes][:first_name] = attributes[:guest_first_name]
-      reservation[:guest_attributes][:last_name] = attributes[:guest_last_name]
-      reservation[:guest_attributes][:guest_contacts_attributes] =
-        attributes[:guest_phone_numbers]&.map { |phone| { phone: phone } }
-    end
+    }
+  end
+
+  # Params that are specific to the Guest model
+  #
+  # @return [Hash]
+  def guest_params
+    {
+      email: attributes[:guest_email],
+      first_name: attributes[:guest_first_name],
+      last_name: attributes[:guest_last_name],
+      guest_contact_attributes: attributes[:guest_phone_numbers]&.map { |phone| { phone: phone } },
+    }
   end
 end

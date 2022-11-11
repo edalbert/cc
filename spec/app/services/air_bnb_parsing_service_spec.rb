@@ -45,19 +45,11 @@ describe AirBnbParsingService do
           start_date: attributes[:start_date],
           status: attributes[:status],
           total_price: attributes[:total_paid_amount_accurate],
-          guest_attributes: {
-            email: attributes[:guest_email],
-            first_name: attributes[:guest_first_name],
-            last_name: attributes[:guest_last_name],
-            guest_contacts_attributes: attributes[:guest_phone_numbers].map do |phone|
-              { phone: phone }
-            end,
-          },
         }
       end
 
       it 'transforms the hash into something the database can save' do
-        expect(service.transform).to eq(expected_data)
+         expect(service.transform).to eq(expected_data)
       end
     end
 
@@ -69,8 +61,7 @@ describe AirBnbParsingService do
         expect(subject).to be_a Hash
         expect(subject.keys).to match_array(%i[code description end_date host_currency
           number_of_adults number_of_children number_of_guests number_of_infants
-          number_of_nights payout_price security_price start_date status total_price
-          guest_attributes]
+          number_of_nights payout_price security_price start_date status total_price]
         )
       end
     end
