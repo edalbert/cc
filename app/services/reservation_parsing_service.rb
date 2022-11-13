@@ -39,4 +39,11 @@ class ReservationParsingService
     guest.save
     guest.reload
   end
+
+  def process_reservation
+    reservation = Reservation.find_or_initialize_by(code: reservation_params[:code])
+    reservation.attributes = reservation_params
+    reservation.guest = process_guest
+    reservation.save
+  end
 end

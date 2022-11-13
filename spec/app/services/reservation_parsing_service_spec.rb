@@ -58,4 +58,35 @@ describe ReservationParsingService do
       end
     end
   end
+
+  describe '#process_reservation' do
+    subject { described_class.new(params).process_reservation }
+
+    let(:params) do
+      {
+        reservation_code: code,
+        guests: 36,
+      }
+    end
+
+    context 'when there is an existing reservation with the same reservation code' do
+      let(:code) { Faker::Code.unique.nric }
+      let(:guest) { Guest.create email: Faker::Internet.unique.email }
+      before { Reservation.create(code: code, number_of_guests: 35, guest: guest)}
+
+      it 'does not create a new reservation and updates the reservation with the param data' do
+        expect { subject }.to_not change(Reservation, :count)
+        expect(Reservation.last.number_of_guests).to eq 36
+      end
+    end
+
+    context 'when there is no existing reservation with the same reservation code' do
+      let(:code) { Faker::Code.unique.nric }
+      let(:guest) { Guest.create email: Faker::Internet.unique.email }
+      it 'creates a new reservation' do
+        expect { subject }.to change(Reservation, :count).by(1)
+        expect(Reservation.find_by(code: code).number_of_guests).to eq 36
+      end
+    end
+  end
 end
