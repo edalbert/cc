@@ -13,7 +13,7 @@ class ReservationParsingService
                    elsif match_keys?(BookingDotComParsingService::EXPECTED_KEYS)
                      BookingDotComParsingService.new(attributes)
                    else
-                     raise StandardError
+                     nil
                    end
   end
 
@@ -40,8 +40,10 @@ class ReservationParsingService
 
   # Process Reservation based on the available params
   #
-  # @return [Reservation]
+  # @return [Reservation|nil]
   def process_reservation
+    return if transformer.nil?
+
     reservation = Reservation.find_or_initialize_by(code: reservation_params[:code])
     reservation.attributes = reservation_params
     reservation.guest = process_guest
