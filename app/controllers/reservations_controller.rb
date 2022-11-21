@@ -8,8 +8,9 @@ class ReservationsController < ApplicationController
   end
 
   def create
-    @reservation = request.request_parameters
+    reservation_params = request.request_parameters
 
-    render json: @reservation
+    reservation = ReservationParsingService.new(reservation_params).process
+    render json: reservation
   end
 end

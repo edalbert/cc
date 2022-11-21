@@ -89,4 +89,28 @@ describe ReservationParsingService do
       end
     end
   end
+
+  describe '#process' do
+    subject { described_class.new(params).process }
+
+    let(:params) do
+      {
+        reservation: {
+          guest_email: email,
+          guest_first_name: 'Wayne',
+          guest_last_name: 'Woodbridge',
+          guest_phone_numbers: ['639123456789', '639123456789'],
+        }
+      }
+    end
+    let(:email) { Faker::Internet.email }
+
+    it 'returns the new reservation' do
+      expect(subject).to be_a(Reservation)
+    end
+
+    it 're' do
+
+    end
+  end
 end

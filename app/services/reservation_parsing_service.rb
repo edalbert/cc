@@ -1,12 +1,12 @@
 require 'active_support'
 require 'active_support/core_ext'
+
 class ReservationParsingService
   attr_accessor :transformer, :raw_attributes
   # To use:
   #
   # ReservationParsingService.new(params).process
   def initialize(attributes)
-    attributes.deep_symbolize_keys!
     @transformer = if attributes[:reservation].present?
                      AirBnbParsingService.new(attributes[:reservation])
                    else
@@ -18,13 +18,13 @@ class ReservationParsingService
   # Creates or Updates a Reservation if it already exists
   # Creates or Updates a Guest if it exists
   def process
-    guest = process_guest
-    # reservation = process_reservation
+    process_reservation
   end
 
   # private
 
   def reservation_params
+    puts transformer.class.name
     transformer.reservation_params
   end
 
@@ -40,10 +40,14 @@ class ReservationParsingService
     guest.reload
   end
 
+  # Process Reservation based on the available params
+  #
+  # @return [Reservation]
   def process_reservation
     reservation = Reservation.find_or_initialize_by(code: reservation_params[:code])
     reservation.attributes = reservation_params
     reservation.guest = process_guest
     reservation.save
+    reservation.reload
   end
 end
