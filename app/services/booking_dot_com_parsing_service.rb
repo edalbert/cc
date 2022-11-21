@@ -4,6 +4,11 @@ require 'active_support/core_ext'
 class BookingDotComParsingService
   attr_reader :attributes
 
+  EXPECTED_KEYS = %w[reservation_code guest end_date currency adults
+    children guests infants nights payout_price security_price start_date status
+    total_price
+  ]
+
   # To use:
   #
   # service = BookingDotComParsingService.new(params[:reservation])
@@ -19,7 +24,7 @@ class BookingDotComParsingService
   def reservation_params
     {
       code: attributes[:reservation_code],
-      description: attributes.dig(:guest_details, :localized_description),
+      description: attributes.dig(:guest, :localized_description),
       end_date: attributes[:end_date],
       host_currency: attributes[:currency] ,
       number_of_adults: attributes[:adults],
