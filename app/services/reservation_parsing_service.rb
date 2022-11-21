@@ -17,23 +17,19 @@ class ReservationParsingService
                    end
   end
 
-  # Creates or Updates a Reservation if it already exists
-  # Creates or Updates a Guest if it exists
-  def process
-    process_reservation
-  end
-
-  # private
-
+  # @return [Hash]
   def reservation_params
-    puts transformer.class.name
     transformer.reservation_params
   end
 
+  # @return [Hash]
   def guest_params
     @guest_params ||= transformer.guest_params
   end
 
+  # Create/Find guest based on email
+  #
+  # @return [Guest]
   def process_guest
     guest = Guest.find_or_initialize_by(email: guest_params[:email])
 
@@ -54,11 +50,16 @@ class ReservationParsingService
   end
 
   # Check if the provided keys match expected keys from third-party services
+  #
+  # return [Boolean]
   def match_keys?(expected_keys)
     all_keys = recursive_keys(raw_attributes.deep_symbolize_keys).flatten.compact
     (expected_keys - all_keys).empty?
   end
 
+  # Recursive method to get all keys from nested hashes
+  #
+  # @return[Array]
   def recursive_keys(data)
     data.keys + data.values.map{|value| recursive_keys(value) if value.is_a?(Hash) }
   end

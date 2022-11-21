@@ -127,7 +127,7 @@ describe ReservationParsingService do
   end
 
   describe '#process' do
-    subject { described_class.new(params).process }
+    subject { described_class.new(params).process_reservation }
 
     let(:params) { airbnb_params }
 
