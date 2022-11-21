@@ -43,7 +43,7 @@ describe AirBnbParsingService do
           payout_price: attributes[:expected_payout_amount],
           security_price: attributes[:listing_security_price_accurate],
           start_date: attributes[:start_date],
-          status: attributes[:status],
+          status: attributes[:status_type],
           total_price: attributes[:total_paid_amount_accurate],
         }
       end

@@ -4,7 +4,7 @@ require 'active_support/core_ext'
 class AirBnbParsingService
   attr_reader :attributes
 
-  EXPECTED_KEYS = %w[reservation code guest_details end_date host_currency number_of_guests nights
+  EXPECTED_KEYS = %i[reservation code guest_details end_date host_currency number_of_guests nights
     expected_payout_amount listing_security_price_accurate start_date status_type
     total_paid_amount_accurate localized_description number_of_adults number_of_children
     number_of_infants guest_email guest_first_name guest_last_name guest_phone_numbers

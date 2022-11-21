@@ -4,7 +4,7 @@ require 'active_support/core_ext'
 class BookingDotComParsingService
   attr_reader :attributes
 
-  EXPECTED_KEYS = %w[reservation_code guest end_date currency adults
+  EXPECTED_KEYS = %i[reservation_code guest end_date currency adults
     children guests infants nights payout_price security_price start_date status
     total_price
   ]
